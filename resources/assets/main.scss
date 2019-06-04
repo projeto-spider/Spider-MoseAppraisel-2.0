@@ -1,0 +1,34 @@
+/*
+	This files is used to set diferents colors 
+	from all the others avaible on Buefy framework.
+	To understand how to do this please check Bulma's 
+	documentation.
+*/
+
+@import "~bulma/sass/utilities/_all";
+
+$primary: #5183f7;
+$ligthGray: #f8f8f8;
+$ligthPurple: #a7a3d6;
+$ligthBlue: #C7D8FF;
+$mose: #0f2750;
+
+$primary-invert: findColorInvert($primary);
+$ligthGray-invert: findColorInvert($ligthGray);
+$ligthPurple-invert: findColorInvert($ligthPurple);
+$ligthBlue-invert: findColorInvert($ligthBlue);
+$mose-invert: findColorInvert($mose);
+
+$colors: (
+  "primary": ($primary, $primary-invert),
+  "ligthGray": ($ligthGray, $ligthGray-invert),
+  "ligthPurple": ($ligthPurple, $ligthPurple-invert),
+  "ligthBlue": ($ligthBlue, $ligthBlue-invert),
+  "mose": ($mose, $mose-invert)
+);
+
+$footer-background-color: $ligthGray;
+$modal-card-head-background-color: $ligthBlue;
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";

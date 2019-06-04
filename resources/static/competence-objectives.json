@@ -1,0 +1,121 @@
+{
+  "TH 1": {
+    "id": "TH 1",
+    "description": "Papéis e responsabilidades dos colaboradores são definidos, comunicados e aprovados.",
+    "competence": "TH"
+  },
+
+  "TH 2": {
+    "id": "TH 2",
+    "description": "Necessidades de capacitação são identificadas e tratadas.",
+    "competence": "TH"
+  },
+
+  "TH 3": {
+    "id": "TH 3",
+    "description": "As metas dos colaboradores são comunicadas e analisadas.",
+    "competence": "TH"
+  },
+
+  "TH 4": {
+    "id": "TH 4",
+    "description": "Ações para o bem-estar, valorização e satisfação dos colaboradores são promovidas.",
+    "competence": "TH"
+  },
+
+  "GQ 1": {
+    "id": "GQ 1",
+    "description": "Estruturas básicas para a gestão das metas de negócio são estabelecidas e mantidas.",
+    "competence": "GQ"
+  },
+
+  "GQ 2": {
+    "id": "GQ 2",
+    "description": "Abordagens para gestão de equipes são estabelecidas e mantidas.",
+    "competence": "GQ"
+  },
+
+  "GQ 3": {
+    "id": "GQ 3",
+    "description": "Os bens e/ou serviços gerados são verificados.",
+    "competence": "GQ"
+  },
+
+  "GQ 4": {
+    "id": "GQ 4",
+    "description": "Melhorias são identificadas e implementadas.",
+    "competence": "GQ"
+  },
+
+  "CM 1": {
+    "id": "CM 1",
+    "description": "Acordos com os clientes são estabelecidos e gerenciados.",
+    "competence": "CM"
+  },
+
+  "CM 2": {
+    "id": "CM 2",
+    "description": "Ações para promover um bom consumo de bens e/ou serviços são realizadas.",
+    "competence": "CM"
+  },
+
+  "CM 3": {
+    "id": "CM 3",
+    "description": "Atendimentos aos clientes são realizados.",
+    "competence": "CM"
+  },
+
+  "CM 4": {
+    "id": "CM 4",
+    "description": "O Relacionamento com os clientes é realizado",
+    "competence": "CM"
+  },
+
+  "IN 1": {
+    "id": "IN 1",
+    "description": "Oportunidades e/ou problemas são identificados e registrados.",
+    "competence": "IN"
+  },
+
+  "IN 2": {
+    "id": "IN 2",
+    "description": "Oportunidades e/ou problemas são identificados e registrados.",
+    "competence": "IN"
+  },
+
+  "IN 3": {
+    "id": "IN 3",
+    "description": "Ideias e cenários são analisados, priorizados e selecionados para execução.",
+    "competence": "IN"
+  },
+
+  "IN 4": {
+    "id": "IN 4",
+    "description": "Ideias e cenários selecionados são executados e incorporados ao negócio (ou descartados).",
+    "competence": "IN"
+  },
+
+  "SO 1": {
+    "id": "SO 1",
+    "description": "A unidade de negócio conheçe e cumpre as exigências formais para seu funcionamento.",
+    "competence": "SO"
+  },
+
+  "SO 2": {
+    "id": "SO 2",
+    "description": "Resíduos que causem impacto negativo ambiental e/ou social têm destinação apropriada.",
+    "competence": "SO"
+  },
+
+  "SO 3": {
+    "id": "SO 3",
+    "description": "Princípios do associativismo e cooperativismo são fomentados.",
+    "competence": "SO"
+  },
+
+  "SO 4": {
+    "id": "SO 4",
+    "description": "A responsabilidade social e ações socioculturais são fomentadas.",
+    "competence": "SO"
+  }
+}

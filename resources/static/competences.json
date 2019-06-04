@@ -1,0 +1,26 @@
+{
+  "TH": {
+    "id": "TH",
+    "name": "Talento Humano"
+  },
+
+  "GQ": {
+    "id": "GQ",
+    "name": "Gestão e qualidade"
+  },
+
+  "CM": {
+    "id": "CM",
+    "name": "Cliente e mercado"
+  },
+
+  "IN": {
+    "id": "IN",
+    "name": "Inovação"
+  },
+
+  "SO": {
+    "id": "SO",
+    "name": "Sociedade e sustentabilidade"
+  }
+}

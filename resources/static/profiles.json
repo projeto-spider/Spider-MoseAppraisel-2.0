@@ -1,0 +1,21 @@
+{
+  "valuer": {
+    "id": 2,
+    "name": "Avaliador"
+  },
+
+  "sponsor": {
+    "id": 3,
+    "name": "Patrocinador"
+  },
+
+  "responsible": {
+    "id": 4,
+    "name": "Responsável"
+  },
+
+  "team": {
+    "id": 5,
+    "name": "Time"
+  }
+}

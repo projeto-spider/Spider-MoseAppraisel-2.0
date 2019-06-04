@@ -1,0 +1,58 @@
+{
+  "evaluationStatus": [
+    "Vigente",
+    "Finalizada"
+  ],
+
+  "solutionsStatus": [
+    "Novo",
+    "Em andamento",
+    "Finalizada"
+  ],
+
+  "colors": {
+    "1": {
+      "id": "#2b2b2b",
+      "helper": "0",
+      "name": "Cinza",
+      "meaning": "Não se aplica"
+    },
+
+    "2": {
+      "id": "",
+      "helper": "1",
+      "name": "Vermelho",
+      "meaning": "Não satisfaz os objetivos."
+    },
+
+    "3": {
+      "id": "#ed8b00",
+      "helper": "2",
+      "name": "Laranja",
+      "meaning": "As vezes faz, as vezes não, e tem fraquezas"
+    },
+
+    "4": {
+      "id": "#ffdb00",
+      "helper": "3",
+      "name": "Amarelo",
+      "meaning": "Ele faz os objetivos com fraquezas"
+    },
+
+    "5": {
+      "id": "#36ff2f",
+      "helper": "4",
+      "name": "Verde",
+      "meaning": "Satisfaz os objetivos, sem fraquezas"
+    },
+
+    "6": {
+      "id": "#91eafe",
+      "helper": "5",
+      "name": "Azul",
+      "meaning": "Fortalezas, esta acima dos objetivos, sem nenhuma fraqueza"
+    }
+  },
+
+  "contractors": []
+}
