@@ -8,9 +8,6 @@
         <h2 class="subtitle">
           <strong>Unidade de negócio:</strong> {{ evaluation.unit.name }}
         </h2>
-        <h3 class="subtitle">
-          <strong>Avaliador:</strong> {{ evaluation.valuerId }}
-        </h3>
       </div>
     </section>
     <div class="columns margin-layout">
@@ -58,7 +55,7 @@
           </b-tab-item>
         </b-tabs>
         </br>
-
+        <button class="button" @click="checkFinalize">Finalizar avaliação</button>
       </div>
     </div>
     <section>
