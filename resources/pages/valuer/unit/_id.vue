@@ -69,6 +69,12 @@
                     @click="chargeMap">
                       Mapa de calor
                   </button>
+                  <button
+                    v-if="choosedEvaluation.status === 'Finalizada'"
+                    class="button"
+                    @click="chargeResult">
+                      Resultado da Avaliação
+                  </button>
                 </div>
               </div>
             </div>
@@ -437,6 +443,11 @@ export default {
     chargeMap () {
       const {id} = this.choosedEvaluation
       this.$router.push({path: `/improvement/${id}/map`})
+    },
+
+    chargeResult () {
+      const {id} = this.choosedEvaluation
+      this.$router.push({path: `/valuer/results/${id}`})
     },
 
     closeTermModal () {
