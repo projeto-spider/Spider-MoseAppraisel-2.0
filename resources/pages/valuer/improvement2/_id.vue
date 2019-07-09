@@ -9,74 +9,86 @@
           <strong>Unidade de negócio:</strong> {{ evaluation.unit.name }}
         </h2>
         <h3 class="subtitle">
-          <strong>Avaliador: Sandro </strong> {{ evaluation.valuer }}
+          <strong>Avaliador:</strong> {{ evaluation.valuer }}
         </h3>
       </div>
-
-
-
-
+    </section>
 
 <script type="text/javascript" src="js/jspdf/jspdf.plugin.addimage.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 
-    </section>
+
+</section>
     <div id="editor"></div>
     <button class="button" id="cmd" @click="createPDF">Gerar PDF</button>
 
+
     <div class="columns margin-layout">
       <div class="column">
+
+        <div class="navbar-end">
+          <a @click="chargeMap">
+            mapa de calor
+          </a>
+        </div>
+
         <b-tabs position="is-centered">
-          <h3 class="title"> Talento Humano
-           </h3>
-            <div v-for="(objective, i) in objectives.TH" :key="objective.id">
-              <objectiveItem
+          <b-tab-item label="Talento Humano">
+
+            <div v-for="objective in objectives.TH" :key="objective.id">
+              <improvementItem
                 :objective="objective"
-              ></objectiveItem>
+                :team="team"
+              ></improvementItem>
             </div>
+          </b-tab-item>
 
+          <b-tab-item label="Gestão e qualidade">
 
-          <h3 class="title"> Gestão e Qualidade
-          </h3>
             <div v-for="objective in objectives.GQ" :key="objective.id">
-              <objectiveItem
+              <improvementItem
                 :objective="objective"
-              ></objectiveItem>
+                :team="team"
+              ></improvementItem>
             </div>
+          </b-tab-item>
 
+          <b-tab-item label="Cliente e mercado">
 
-          <h3 class="title"> Cliente e Mercado
-          </h3>
             <div v-for="objective in objectives.CM" :key="objective.id">
-              <objectiveItem
+              <improvementItem
                 :objective="objective"
-              ></objectiveItem>
+                :team="team"
+              ></improvementItem>
             </div>
+          </b-tab-item>
 
+          <b-tab-item label="Inovação">
 
-          <h3 class="title"> Inovação
-          </h3>
             <div v-for="objective in objectives.IN" :key="objective.id">
-              <objectiveItem
+              <improvementItem
                 :objective="objective"
-              ></objectiveItem>
+                :team="team"
+              ></improvementItem>
             </div>
+          </b-tab-item>
 
+          <b-tab-item label="Sociedade e sustentabilidade">
 
-          <h3 class="title"> Sociedade e sustentabilidade
-          </h3>
             <div v-for="objective in objectives.SO" :key="objective.id">
-              <objectiveItem
+              <improvementItem
                 :objective="objective"
-              ></objectiveItem>
+                :team="team"
+              ></improvementItem>
             </div>
-
+          </b-tab-item>
         </b-tabs>
-        </br>
-
+        <br/>
+        <button class="button" @click="finalize = true">Finalizar plano</button>
       </div>
     </div>
+
     <section>
       <b-modal :active.sync="finalize">
       <form action="">
@@ -86,7 +98,7 @@
           </header>
           <footer class="modal-card-foot">
               <button class="button" type="button" @click="finalize = false">Cancelar</button>
-              <button class="button is-primary" type="button" @click="finalizeEvaluation">Finalizar</button>
+              <button class="button is-primary" type="button" @click="finalizePlan">Finalizar</button>
           </footer>
         </div>
       </form>
@@ -95,18 +107,22 @@
   </div>
 </template>
 
-<script src=”//mrrio.github.io/jsPDF/dist/jspdf.debug.js”></script>
 <script>
 import { mapGetters } from 'vuex'
 import objectives from '~/static/competence-objectives.json'
 import competences from '~/static/competences.json'
-import objectiveItem from '~/components/objective-item-result'
-import jsPDF from 'jsPDF'
+import improvementItem from '~/components/improvement-item-2.vue'
 
 export default {
+  name: 'improvement',
+
   layout: 'basic',
 
-  components: { objectiveItem },
+  components: { improvementItem },
+
+  async created () {
+    this.chargeMembers()
+  },
 
   computed: {
     ...mapGetters(['loggedUser']),
@@ -119,6 +135,15 @@ export default {
         acc[result.competence].push(result)
         return acc
       }, {})
+    },
+
+    filteredMemberObj () {
+      return this.members.filter((option) => {
+        return option.username
+          .toString()
+          .toLowerCase()
+          .indexOf(this.name.toLowerCase()) >= 0
+      })
     }
   },
 
@@ -128,43 +153,71 @@ export default {
     const data = {
       id,
       competences: competences,
-      finalize: false,
-      evaluation: {}
+      evidences: [],
+      result: [],
+      plan: {
+        solution: '',
+        solutionDate: new Date(),
+        status: 'novo'
+      },
+      membersId: [],
+      team: [],
+      members: [],
+      unit: {},
+      sponsor: {},
+      evaluation: {},
+      finalize: false
     }
 
     const evaluation = await app.$axios.$get(`/api/evaluations/${id}`)
     Object.assign(data.evaluation, evaluation)
 
+    const unitId = evaluation.unitId
+    const unit = await app.$axios.$get(`/api/units/${unitId}`)
+    Object.assign(data.unit, unit)
+
+    data.membersId = unit.members
+
+    const team = await app.$axios.$get(`/api/unit-id/${unitId}`)
+    data.team = team
+
+    const sponsor = await app.$axios.$get(`/api/users/${unit.achievement.sponsorId}`)
+    Object.assign(data.sponsor, sponsor)
+
     return data
   },
 
   methods: {
-    async loadEvaluation () {
-      const evaluation = await this.$axios.$get(`/api/evaluations/${this.id}`)
-      this.evaluation = evaluation
-    },
-
-    async checkFinalize () {
-      const results = await this.$axios.$get(`/api/evaluation-result/${this.id}`)
-
-      if (results.length < 20) {
-        this.$toast.open({
-          message: 'Os objetios não foram avaliados por completo. Avalie todos e tente novamente.',
-          duration: 5000,
-          position: 'is-bottom-right',
-          type: 'is-danger'
-        })
-      } else {
-        this.finalize = true
+    async chargeMembers () {
+      this.members = []
+      for (var i = 0; i < this.team.length; i++) {
+        var user = this.team[i].member
+        this.members.push(user)
       }
+      this.members.push(this.sponsor)
+      this.members.push(this.unit.responsible)
     },
 
-
-    async finalizeEvaluation () {
+    async chargeEvidences (practice) {
       const data = {
-        colorFinal: true,
-        status: 'Finalizada',
-        endDate: new Date()
+        evaluationId: this.$route.params.id,
+        practice: practice
+      }
+
+      const evidences = await this.$axios.$post('/api/per-practice/', data)
+      const result = await this.$axios.$post('/api/res-practice/', data)
+
+      this.evidences = evidences
+      this.result = result
+    },
+
+    chargeMap () {
+      this.$router.push({path: `/improvement/${this.evaluation.id}/map`})
+    },
+
+    async finalizePlan () {
+      const data = {
+        planFinal: true
       }
 
       await this.$axios.$put(`/api/evaluations/${this.id}`, data)
@@ -192,15 +245,8 @@ export default {
 </script>
 
 <style>
-.margin-layout {
-  margin: 15px;
-}
-</style>
-
-<style>
 .button {
-  padding: 4px;
+  padding: 5px;
   display: inline-flex
-
 }
 </style>

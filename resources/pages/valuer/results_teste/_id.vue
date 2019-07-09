@@ -23,7 +23,7 @@
 
     </section>
     <div id="editor"></div>
-    <button class="button" id="cmd" @click="createPDF">Gerar PDF</button>
+    <button class="button" @click="genpdf">Gerar PDF</button>
 
     <div class="columns margin-layout">
       <div class="column">
@@ -100,8 +100,9 @@
 import { mapGetters } from 'vuex'
 import objectives from '~/static/competence-objectives.json'
 import competences from '~/static/competences.json'
-import objectiveItem from '~/components/objective-item-result'
+import objectiveItem from '~/components/objective-item-result-teste'
 import jsPDF from 'jsPDF'
+import html2canvas from 'html2canvas'
 
 export default {
   layout: 'basic',
@@ -186,7 +187,19 @@ export default {
             });
             doc.save('sample-file.pdf');
         });
-     }
+     },
+
+     genpdf(){
+     html2canvas(document.getElementById("content")).then(function(canvas) {
+
+
+                var img = canvas.toDataURL('image/png');
+                var doc = new jsPDF();
+                doc.addImage(img, 'JPEG', 0, 0, 250, 300);
+                doc.addPage();
+                doc.save('test.pdf');
+            });
+           }
   }
 }
 </script>

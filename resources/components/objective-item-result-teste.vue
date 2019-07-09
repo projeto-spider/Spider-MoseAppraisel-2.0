@@ -46,7 +46,7 @@
 
         <div v-if="result.length > 0 && !editing">
           <p><strong>Resultado:</strong></p>
-          <div v-if="result[0].result = 'verde'"> <div> {{result[0].result}} </div>  </div>
+          <colorConversor class="margin-layout" :color="result[0].result"></colorConversor>
           <br/>
           <p><strong>Problemas:</strong></p>
           <div v-if="result[0].problem.length > 0"> {{result[0].problem}} </div>

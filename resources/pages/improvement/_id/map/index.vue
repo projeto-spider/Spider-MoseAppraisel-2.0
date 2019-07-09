@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <section class="hero">
       <div class="hero-body">
         <h1 class="title" v-if="evaluation !== null">
@@ -7,6 +7,7 @@
         </h1>
       </div>
     </section>
+    <button class="button" @click="genpdf">Gerar Relatório </button>
     <div class="column is-four-fifths is-offset-1 upper">
       <b-table :data="data" :columns="columns">
         <template slot-scope="props">
@@ -54,6 +55,8 @@ import objectives from '~/static/competence-objectives.json'
 import helpers from '~/static/helpers.json'
 import colorConversor from '~/components/color-conversor.vue'
 import colorGuide from '~/components/color-guide.vue'
+import jsPDF from 'jsPDF'
+import html2canvas from 'html2canvas'
 
 export default {
   name: 'heat-map',
@@ -225,7 +228,17 @@ export default {
       } else if (result.includes('Azul')){
         this.finalResult = 'Azul'
       }
-    }
+    },
+
+    genpdf(){
+     html2canvas(document.getElementById("content")).then(function(canvas) {
+
+                var img = canvas.toDataURL('image/png');
+                var doc = new jsPDF();
+                doc.addImage(img, 'JPEG', 0, 0, 200, 300);
+                doc.save('test.pdf');
+            });
+           }
   }
 }
 </script>
