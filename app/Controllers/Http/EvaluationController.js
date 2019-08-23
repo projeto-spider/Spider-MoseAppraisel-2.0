@@ -10,6 +10,7 @@ class EvaluationController {
       .with('evidences')
       .with('results')
       .fetch()
+////precisa adicionar (.with('audits') ????
 
     return evaluation
   }

@@ -1,0 +1,22 @@
+{
+  "AD 1": {
+    "id": "Item 1",
+    "description": "O plano de melhoria está correto e completo?",
+    "competence": "AD"
+  },
+  "AD 2": {
+    "id": "Item 2",
+    "description": "O mapa de calor está correto e completo?",
+    "competence": "AD"
+  },
+  "AD 3": {
+    "id": "Item 3",
+    "description": "O resultado da avaliação está correto e completo?",
+    "competence": "AD"
+  },
+  "AD 4": {
+    "id": "Item 4",
+    "description": "O acordo de confidencialidade foi assinado por todos os envolvidos?",
+    "competence": "AD"
+  }
+}

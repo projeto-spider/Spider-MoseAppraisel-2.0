@@ -50,6 +50,7 @@
                   >
                     Avaliar
                   </nuxt-link>
+                  </button>
                   <a 
                     class="button" 
                     v-if="choosedEvaluation.status === 'Vigente'" 
@@ -75,6 +76,27 @@
                     @click="chargeResult">
                       Resultado da Avaliação
                   </button>
+                  <button
+                    v-if="choosedEvaluation.status === 'Auditada'"
+                    class="button"
+                    @click="chargeResult">
+                      Resultado da Avaliação
+                  </button>
+                  <nuxt-link
+                    :to="`/valuer/audit-teste/${choosedEvaluation.id}`"
+                    v-if="choosedEvaluation.status === 'Finalizada'"
+                    class="button"
+                  >
+                    Auditar
+                  </nuxt-link>
+                  </button>
+                  <nuxt-link
+                    :to="`/valuer/audit-result/${choosedEvaluation.id}`"
+                    v-if="choosedEvaluation.status === 'Auditada'"
+                    class="button"
+                  >
+                    Resultado da Auditoria
+                  </nuxt-link>
                 </div>
               </div>
             </div>
@@ -272,6 +294,7 @@ export default {
       evaluationCreation: false,
       evaluationEdition: false,
       selectedEvaluation: false,
+      selectedAudit: false,
       choosedEvaluation: {},
       evaluations: [],
       openTerm: false,
@@ -284,6 +307,7 @@ export default {
         partner: '',
         startDate: new Date()
       },
+
       editedEvaluation: {},
       columns: [
         {
@@ -384,6 +408,8 @@ export default {
       }
     },
 
+
+
     async createEvaluation () {
       this.createdEvaluation.unitId = this.unit.id
       this.createdEvaluation.valuerId = this.unit.valuerId
@@ -393,6 +419,7 @@ export default {
         .then(this.handleSuccess)
         .cath(this.handleFail)
     },
+
 
     handleSuccess () {
       this.$toast.open({
@@ -414,6 +441,8 @@ export default {
         type: 'is-danger'
       })
     },
+
+
 
     editEvaluation () {
       this.editedEvaluation = this.choosedEvaluation
@@ -448,6 +477,11 @@ export default {
     chargeResult () {
       const {id} = this.choosedEvaluation
       this.$router.push({path: `/valuer/results/${id}`})
+    },
+
+    chargeAudit () {
+      const {id} = this.chooseEvaluation
+      this.$router.push({path: `/valuer/audit-teste/${id}`})
     },
 
     closeTermModal () {

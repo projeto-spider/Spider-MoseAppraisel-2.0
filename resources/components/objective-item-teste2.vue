@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-collapse class="card" :open="open">
+    <b-collapse class="card" :open="false" >
       <div slot="trigger" slot-scope="props" class="card-header">
         <p class="card-header-title" @click="chargeEvidences(objective.id)">
           {{objective.id}} - {{objective.description}}
@@ -23,36 +23,67 @@
         </div>
         <div v-if="result.length === 0">
           <section>
-            <b-field label="Resultado">
-
-
-
+            <b-field label="Informe a situação">
+              <b-select
+                placeholder="Selecione uma cor"
+                v-model="evaluation.result"
+              >
+                <option
+                  v-for="color in colors"
+                  :value="color.name"
+                  :key="color.id"
+                >
+                  {{ color.name }}
+                </option>
               </b-select>
             </b-field>
 
-            <b-field label="Problemas encontrados">
-
+            <b-field label="Ação de melhoria">
+              <b-input maxlength="1000" type="textarea" v-model="evaluation.problem"></b-input>
             </b-field>
           </section>
           <div v-if="!isNotBadColor || evaluation.problem.length > 0">
-
+            <button class="button" @click="addEvaluation(objective.id, evaluation)">Confirmar</button>
           </div>
           <div v-else>
             <p>Informe os problemas encontrados para depois avaliar.</p>
           </div>
         </div>
 
+        <div v-if="editing">
+          <section>
+            <b-field label="Informe a situação">
+              <b-select
+                placeholder="Selecione uma cor"
+                v-model="evaluation.result"
+              >
+                <option
+                  v-for="color in colors"
+                  :value="color.name"
+                  :key="color.id"
+                >
+                  {{ color.name }}
+                </option>
+              </b-select>
+            </b-field>
 
+            <b-field label="Ação de melhoria">
+              <b-input maxlength="1000" type="textarea" v-model="evaluation.problem"></b-input>
+            </b-field>
+          </section>
+          <button class="button" @click="updateEvaluation(objective.id, evaluation)">Atualizar</button>
+          <button class="button" @click="closeEdition">Cancelar</button>
+        </div>
 
         <div v-if="result.length > 0 && !editing">
-          <p><strong>Resultado:</strong></p>
+          <p><strong>Situação:</strong></p>
           <div> {{result[0].result}} </div>
           <br/>
-          <p><strong>Problemas:</strong></p>
+          <p><strong>Ação:</strong></p>
           <div v-if="result[0].problem.length > 0"> {{result[0].problem}} </div>
           <div v-else> <p>Não foram cadastrados problemas</p> </div>
           <br/>
-
+          <button class="button" @click="editEvaluation">Editar</button>
         </div>
       </div>
     </b-collapse>
@@ -76,28 +107,17 @@ export default {
     colors: [
       {
         id: 1,
-        name: 'Verde'
+        name: 'Conforme'
       },
       {
         id: 2,
-        name: 'Azul'
+        name: 'Não conforme'
       },
       {
         id: 3,
-        name: 'Amarelo'
-      },
-      {
-        id: 4,
-        name: 'Laranja'
-      },
-      {
-        id: 5,
-        name: 'Vermelho'
-      },
-      {
-        id: 6,
-        name: 'Cinza'
+        name: 'Não se aplica'
       }
+
     ],
 
     evaluation: {
@@ -111,9 +131,7 @@ export default {
 
   computed: {
     isNotBadColor () {
-      return this.evaluation.result === 'Amarelo' ||
-        this.evaluation.result === 'Laranja' ||
-        this.evaluation.result === 'Vermelho'
+      return this.evaluation.result === 'Não conforme'
     }
   },
 

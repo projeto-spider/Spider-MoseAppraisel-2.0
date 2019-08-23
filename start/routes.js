@@ -34,6 +34,7 @@ Route.group(() => {
   Route.resource('profiles', 'ProfileController').apiOnly()
   Route.resource('results', 'ResultController').apiOnly()
   Route.resource('improvements', 'ImprovementController').apiOnly()
+  Route.resource('audits', 'AuditController').apiOnly()
   Route.get('me', 'UserController.me').middleware('auth')
   Route.get('roles', 'UserProfileController.index')
   Route.post('roles', 'UserProfileController.store')

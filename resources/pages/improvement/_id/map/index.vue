@@ -1,13 +1,15 @@
 <template>
+
   <div id="content">
     <section class="hero">
       <div class="hero-body">
         <h1 class="title" v-if="evaluation !== null">
-          Mapa de calor da unidade de negocio {{evaluation.unit.name}}
+          Mapa de calor da avaliação de {{evaluation.type}} da unidade de negocio {{evaluation.unit.name}}, feita pelo(a)
+          Avaliador(a) Sandro.
         </h1>
       </div>
     </section>
-    <button class="button" @click="genpdf">Gerar Relatório </button>
+    <button id="botao" class="button" @click="genpdf">Gerar Relatório </button>
     <div class="column is-four-fifths is-offset-1 upper">
       <b-table :data="data" :columns="columns">
         <template slot-scope="props">
@@ -231,6 +233,8 @@ export default {
     },
 
     genpdf(){
+
+     document.getElementById('botao').style.display = 'none';
      html2canvas(document.getElementById("content")).then(function(canvas) {
 
                 var img = canvas.toDataURL('image/png');

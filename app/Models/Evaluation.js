@@ -29,6 +29,9 @@ class Evaluation extends Model {
     return this.hasMany('App/Models/Result', 'id', 'evaluationId')
   }
 
+  audits () {
+    return this.hasMany('App/Models/Audit', 'id', 'evaluationId')
+  }
 }
 
 module.exports = Evaluation

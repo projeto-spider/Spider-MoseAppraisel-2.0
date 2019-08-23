@@ -28,6 +28,10 @@ class Unit extends Model {
   valuer () {
     return this.belongsTo('App/Models/User', 'valuerId')
   }
+
+  audits () {
+    return this.hasMany('App/Models/Audit', 'id', 'evaluationId')
+  }
 }
 
 module.exports = Unit
