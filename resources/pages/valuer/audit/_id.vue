@@ -86,7 +86,25 @@ export default {
       this.audit = audit
     },
 
+    async checkFinalize () {
+      const results = await this.$axios.$get(`/api/evaluation-result/${this.id}`)
 
+      for(i = 0; i<4; i++){
+        if (results[i].result = "Não conforme"){
+
+        }
+      }
+      if (results.length < 20) {
+        this.$toast.open({
+          message: 'Os objetios não foram avaliados por completo. Avalie todos e tente novamente.',
+          duration: 5000,
+          position: 'is-bottom-right',
+          type: 'is-danger'
+        })
+      } else {
+        this.finalize = true
+      }
+    },
 
     async finalizeAudit () {
       const data = {
@@ -98,7 +116,7 @@ export default {
         situation3: audit.situation3,
         action3: audit.action3,
         situation4: audit.situation4,
-        action4: audit.action1,
+        action4: audit.action4,
       }
 
       await this.$axios.$put(`/api/evaluations/${this.id}`, data)

@@ -135,14 +135,17 @@ export default {
     async checkFinalize () {
       const results = await this.$axios.$get(`/api/evaluation-result/${this.id}`)
 
-      if (results.length < 20) {
+
+
+
+        if (results.includes('Não conforme')){
         this.$toast.open({
           message: 'Os objetios não foram avaliados por completo. Avalie todos e tente novamente.',
           duration: 5000,
           position: 'is-bottom-right',
           type: 'is-danger'
         })
-      } else {
+      }else {
         this.finalize = true
       }
     },

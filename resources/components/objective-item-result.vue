@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-collapse class="card" :open="open">
+    <b-collapse class="card" :open="false">
       <div slot="trigger" slot-scope="props" class="card-header">
         <p class="card-header-title" @click="chargeEvidences(objective.id)">
           {{objective.id}} - {{objective.description}}

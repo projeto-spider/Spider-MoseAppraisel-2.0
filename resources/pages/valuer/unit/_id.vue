@@ -97,6 +97,13 @@
                   >
                     Resultado da Auditoria
                   </nuxt-link>
+                  <nuxt-link
+                    :to="`/valuer/certificate/${choosedEvaluation.id}`"
+                    v-if="choosedEvaluation.status === 'Auditada'"
+                    class="button"
+                  >
+                    Certificado
+                  </nuxt-link>
                 </div>
               </div>
             </div>
