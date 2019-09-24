@@ -5,7 +5,7 @@
       <div class="hero-body">
         <h1 class="title" v-if="evaluation !== null">
           Mapa de calor da avaliação de {{evaluation.type}} da unidade de negocio {{evaluation.unit.name}}, feita pelo(a)
-          Avaliador(a) Sandro.
+          Avaliador(a) {{evaluation.unit.name}}
         </h1>
       </div>
     </section>

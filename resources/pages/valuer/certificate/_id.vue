@@ -6,15 +6,43 @@
     </section>
     <button id="botao" class="button" @click="genpdf">Gerar Relatório </button>
     <br>
-    <img src="~assets/img/certificaMose3.jpg">
+    <img src="~assets/img/certificaMose3.1.jpg">
     <h6 class="title" v-if="evaluation !== null">
           {{evaluation.unit.name}}
         </h6>
 
     <br>
+
+    <h26 class="title" v-if="evaluation !== null">
+          Achievement {{evaluation.unit.id}}
+        </h26>
+
+    <br>
+
     <h7 class="title" v-if="evaluation !== null">
           {{finalResult}} estrela(s)
-        </h7>
+    </h7>
+
+    <br>
+    <h9 class="title" v-if="evaluation !== null">
+    <div v-if=" evaluation.type == 'Contexto'">
+       bronze,
+     </div>
+    </h9>
+
+    <br>
+    <h10 class="title" v-if="evaluation !== null">
+    <div v-if=" evaluation.type == 'Implementação'">
+       prata,
+     </div>
+    </h10>
+
+    <br>
+    <h10 class="title" v-if="evaluation !== null">
+    <div v-if=" evaluation.type == 'Institucionalização'">
+       ouro,
+     </div>
+    </h10>
 
   </div>
 </template>
@@ -182,22 +210,31 @@ export default {
 
     checkFinalResult () {
       var result = []
-
+      var x = 0;
       for (var i = 0; i < this.data.length; i++) {
         result.push(this.data[i].resultado)
       }
 
       if (result.includes('Vermelho')) {
-        this.finalResult = '1'
+        this.finalResult = '0'
       } else if (result.includes('Laranja')){
-        this.finalResult = '2'
+        this.finalResult = '0'
       } else if (result.includes('Amarelo')){
-        this.finalResult = '3'
+        this.finalResult = '0'
       } else if (result.includes('Verde')){
-        this.finalResult = '4'
+        this.finalResult = '1'
       } else if (result.includes('Azul')){
-        this.finalResult = '5'
+        this.finalResult = '1'
       }
+      for (var i = 0; i < 5; i++) {
+        if((result[i] == 'Azul') || (result[i] == 'Verde')){
+          x++;
+        }
+        if(x == 5) {
+          this.finalResult = '2'
+        }
+      }
+
     },
 
     genpdf(){
@@ -224,12 +261,26 @@ export default {
 }
 h6 {
    position: absolute;
-   top: 400px;
+   top: 450px;
    left: 750px;
    width: 100%;
 }
 
 h6  {
+   color: black;
+   font: times 240px/450px Times;
+   letter-spacing: -1px;
+   padding: 10px;
+}
+
+h26 {
+   position: absolute;
+   top: 400px;
+   left: 700px;
+   width: 100%;
+}
+
+h26  {
    color: black;
    font: times 240px/450px Times;
    letter-spacing: -1px;
@@ -244,6 +295,48 @@ h7 {
 }
 
 h7  {
+   color: black;
+   font: times 20px/45px Helvetica, Sans-Serif;
+   letter-spacing: -2px;
+   padding: 10px;
+}
+
+h8 {
+   position: absolute;
+   top: 520px;
+   left: 1020px;
+   width: 100%;
+}
+
+h8  {
+   color: black;
+   font: times 20px/45px Helvetica, Sans-Serif;
+   letter-spacing: -2px;
+   padding: 10px;
+}
+
+h9 {
+   position: absolute;
+   top: 520px;
+   left: 1020px;
+   width: 100%;
+}
+
+h9  {
+   color: black;
+   font: times 20px/45px Helvetica, Sans-Serif;
+   letter-spacing: -2px;
+   padding: 10px;
+}
+
+h10 {
+   position: absolute;
+   top: 520px;
+   left: 1020px;
+   width: 100%;
+}
+
+h10  {
    color: black;
    font: times 20px/45px Helvetica, Sans-Serif;
    letter-spacing: -2px;
