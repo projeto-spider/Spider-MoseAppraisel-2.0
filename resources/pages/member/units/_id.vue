@@ -261,7 +261,7 @@ export default {
 
     async confimMemberTerm () {
       const members = await this.$axios.$get(`api/get-members/${this.choosed.evaluation.id}`)
-
+      contador_assinaturas++
       var result = members.find(obj => {
         return obj.memberId === this.loggedUser.id
       })

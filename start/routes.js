@@ -56,6 +56,7 @@ Route.group(() => {
   Route.post('exist-member', 'MemberEvaluationController.existMember')
   Route.get('get-members/:id', 'MemberEvaluationController.getMembers')
   Route.post('member-confirm/:id', 'MemberEvaluationController.memberConfirm')
+  Route.get('member-num/:id', 'MemberEvaluationController.member_num')
 })
   .formats(['json'])
   .prefix('api')

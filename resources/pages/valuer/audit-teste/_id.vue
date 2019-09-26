@@ -9,7 +9,7 @@
           <strong>Unidade de negócio:</strong> {{ evaluation.unit.name }}
         </h2>
         <h3 class="subtitle">
-          <strong>Resultado da Auditoria:</strong> {{ }}
+          <strong>Status da Avaliação:</strong> {{ evaluation.status }}
         </h3>
       </div>
     </section>
@@ -43,6 +43,16 @@
                     class="button"
                     @click="chargeMap">
                       Mapa de calor
+                  </button>
+    <button
+                    class="button"
+                    @click="chargePlan">
+                      Plano de melhoria
+                  </button>
+    <button
+                    class="button"
+                    @click="chargeTerm">
+                      Assinaturas do Termo de Confidencialidade
                   </button>
 
     <section>
@@ -101,10 +111,7 @@ export default {
   },
 
 
-  data: () => ({
 
-     members: []
-  }),
 
   async asyncData ({ app, params }) {
     const { id } = params
@@ -122,6 +129,11 @@ export default {
     return data
   },
 
+  data: () => ({
+
+     members: []
+  }),
+
   created () {
     this.loadMembers()
   },
@@ -134,9 +146,6 @@ export default {
 
     async checkFinalize () {
       const results = await this.$axios.$get(`/api/evaluation-result/${this.id}`)
-
-
-
 
         if (results.includes('Não conforme')){
         this.$toast.open({
@@ -162,8 +171,22 @@ export default {
     },
 
     async loadMembers () {
-      const members = await this.$axios.$get(`api/get-members/${this.evaluation.id}`)
+      const members = await this.$axios.$get(`api/get-members/${this.id}`)
       this.members = members
+    },
+
+    async chargeTerm () {
+      const {id} = this.$route.params.id
+      const signature = await this.$axios.$get(`api/member-num/${this.id}`)
+
+      if (signature.length < 1) {
+        this.$toast.open({
+          message: 'O termo foi assinado por {{signature.length}} membros',
+          duration: 5000,
+          position: 'is-bottom-right',
+          type: 'is-danger'
+        })
+      }
     },
 
     chargeResult () {
@@ -174,7 +197,13 @@ export default {
     chargeMap () {
       const {id} = this.$route.params.id
       this.$router.push({path: `//improvement/${this.id}/map`})
+    },
+
+    chargePlan () {
+      const {id} = this.$route.params.id
+      this.$router.push({path: `//improvement/${this.id}`})
     }
+
   }
 }
 </script>
