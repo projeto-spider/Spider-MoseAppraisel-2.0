@@ -65,6 +65,12 @@
                       Plano de melhoria
                   </button>
                   <button
+                    v-if="choosedEvaluation.planFinal"
+                    class="button"
+                    @click="chargeResultImprovement">
+                      Relatório do Plano de Ação
+                  </button>
+                  <button
                     v-if="choosedEvaluation.status === 'Finalizada'"
                     class="button"
                     @click="chargeMap">
@@ -474,6 +480,11 @@ export default {
     chargeImprovement () {
       const {id} = this.choosedEvaluation
       this.$router.push({path: `/improvement/${id}`})
+    },
+
+    chargeResultImprovement () {
+      const {id} = this.choosedEvaluation
+      this.$router.push({path: `/improvement-result/${id}`})
     },
 
     chargeMap () {

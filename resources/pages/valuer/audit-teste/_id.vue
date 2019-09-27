@@ -37,7 +37,7 @@
     <button
                     class="button"
                     @click="chargeResult">
-                      Resultado da Avaliação
+                      Relatório da Avaliação
                   </button>
     <button
                     class="button"
@@ -47,12 +47,12 @@
     <button
                     class="button"
                     @click="chargePlan">
-                      Plano de melhoria
+                      Relatório do Plano de melhoria
                   </button>
     <button
                     class="button"
-                    @click="chargeTerm">
-                      Assinaturas do Termo de Confidencialidade
+                    @click="openTerm = true">
+                      Termo de Confidencialidade
                   </button>
 
     <section>
@@ -69,6 +69,22 @@
         </div>
       </form>
     </b-modal>
+
+    <!-- term of confidentiality -->
+      <div v-if="openTerm != false">
+        <confidentialityTerm
+          :activate="!!openTerm"
+          :unit="unit"
+          :evaluation="Evaluation"
+          :on-close="closeTermModal"
+          :sponsor="sponsor"
+          :responsible="evaluation.unit.responsible"
+          :valuer="evaluation.unit.valuer"
+          :members="members"
+          :confirm-term="confimValuerTerm"
+        ></confidentialityTerm>
+
+      </div>
     </section>
   </div>
 </template>
@@ -78,15 +94,23 @@ import { mapGetters } from 'vuex'
 import objectives from '~/static/competence-objectives-teste.json'
 import competences from '~/static/competences-teste.json'
 import objectiveItem from '~/components/objective-item-teste2'
+import confidentialityTerm from  '~/components/confidentiality-term-audit.vue'
+
 
 export default {
   layout: 'basic',
   name: 'valuer-unit',
 
-  components: { objectiveItem },
+  components: { objectiveItem, confidentialityTerm },
 
   computed: {
     ...mapGetters(['loggedUser']),
+
+    openTerm: false,
+
+    isCurrentEvaluation () {
+      return this.choosedEvaluation.status === 'Vigente'
+    },
 
     isCurrentValuer () {
       return this.choosedEvaluation.valuerId === this.loggedUser.id
@@ -120,6 +144,9 @@ export default {
       id,
       competences: competences,
       finalize: false,
+      openTerm: false,
+      sponsor: {},
+      members: [],
       evaluation: {}
     }
 
@@ -129,10 +156,7 @@ export default {
     return data
   },
 
-  data: () => ({
 
-     members: []
-  }),
 
   created () {
     this.loadMembers()

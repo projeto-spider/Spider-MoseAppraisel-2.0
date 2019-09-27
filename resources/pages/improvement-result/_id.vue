@@ -1,24 +1,27 @@
 <template>
-  <div>
+  <div id="content">
     <section class="hero">
       <div class="hero-body">
         <h1 v-if="evaluation !== null" class="title">
-          Plano de melhoria da unidade de negócio {{evaluation.unit.name}}
+          Relatório do Plano de melhoria da unidade de negócio {{evaluation.unit.name}}
         </h1>
       </div>
+
+<script type="text/javascript" src="js/jspdf/jspdf.plugin.addimage.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+
     </section>
+
+    <div id="editor"></div>
+    <button class="button" id="cmd" @click="createPDF">Gerar PDF</button>
+
 
     <div class="columns margin-layout">
       <div class="column">
-
-        <div class="navbar-end">
-          <a @click="chargeMap">
-            mapa de calor
-          </a>
-        </div>
-
         <b-tabs position="is-centered">
-          <b-tab-item label="Talento Humano">
+          <h3 class="title"> Talento Humano
+           </h3>
 
             <div v-for="objective in objectives.TH" :key="objective.id">
               <improvementItem
@@ -26,9 +29,10 @@
                 :team="team"
               ></improvementItem>
             </div>
-          </b-tab-item>
 
-          <b-tab-item label="Gestão e qualidade">
+
+          <h3 class="title"> Gestão e Qualidade
+          </h3>
 
             <div v-for="objective in objectives.GQ" :key="objective.id">
               <improvementItem
@@ -36,9 +40,10 @@
                 :team="team"
               ></improvementItem>
             </div>
-          </b-tab-item>
 
-          <b-tab-item label="Cliente e mercado">
+
+          <h3 class="title"> Cliente e Mercado
+          </h3>
 
             <div v-for="objective in objectives.CM" :key="objective.id">
               <improvementItem
@@ -46,9 +51,10 @@
                 :team="team"
               ></improvementItem>
             </div>
-          </b-tab-item>
 
-          <b-tab-item label="Inovação">
+
+          <h3 class="title"> Inovação
+          </h3>
 
             <div v-for="objective in objectives.IN" :key="objective.id">
               <improvementItem
@@ -56,9 +62,10 @@
                 :team="team"
               ></improvementItem>
             </div>
-          </b-tab-item>
 
-          <b-tab-item label="Sociedade e sustentabilidade">
+
+          <h3 class="title"> Sociedade e sustentabilidade
+          </h3>
 
             <div v-for="objective in objectives.SO" :key="objective.id">
               <improvementItem
@@ -66,10 +73,10 @@
                 :team="team"
               ></improvementItem>
             </div>
-          </b-tab-item>
+
         </b-tabs>
         <br/>
-        <button class="button" @click="finalize = true">Finalizar plano</button>
+
       </div>
     </div>
 
@@ -91,6 +98,7 @@
   </div>
 </template>
 
+<script src=”//mrrio.github.io/jsPDF/dist/jspdf.debug.js”></script>
 <script>
 import { mapGetters } from 'vuex'
 import objectives from '~/static/competence-objectives.json'
@@ -206,7 +214,27 @@ export default {
 
       await this.$axios.$put(`/api/evaluations/${this.id}`, data)
       this.$router.push({path: `/valuer/unit/${this.evaluation.unitId}`, success: true})
-    }
+    },
+
+
+    createPDF(){
+
+       var doc = new jsPDF();
+        var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+        };
+
+        $('#cmd').click(function () {
+            doc.fromHTML($('#content').html(), 15, 15, {
+                'width': 170,
+                    'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+            document.getElementById('cmd').style.display = 'none';
+        });
+     }
   }
 }
 </script>

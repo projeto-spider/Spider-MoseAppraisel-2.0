@@ -172,6 +172,7 @@ export default {
     },
 
     createPDF(){
+
        var doc = new jsPDF();
         var specialElementHandlers = {
         '#editor': function (element, renderer) {
@@ -185,7 +186,9 @@ export default {
                     'elementHandlers': specialElementHandlers
             });
             doc.save('sample-file.pdf');
+            document.getElementById('cmd').style.display = 'none';
         });
+
      }
   }
 }
